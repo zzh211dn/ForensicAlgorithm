@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/src/PicBrowse/FileChooser.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/PicBrowse/PicBrowseFrame.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/shanghaiUni/Excel/ExcelOperation.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/shanghaiUni/common/CMatrix.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/shanghaiUni/common/Pretreatment.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/shanghaiUni/common/PretreatmentSmoothBatchOld.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/shanghaiUni/common/PretreatmentSmoothOne.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/shanghaiUni/common/SmoothMethodStruct.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/shanghaiUni/commonMethod/FileOperation.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/shanghaiUni/compute/SmoothCompute.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/shanghaiUni/datastruct/Instances.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/shanghaiUni/datastruct/Spectrum.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/shanghaiUni/datastruct/SpectrumInfoGroup.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/shanghaiUni/smooth/AveSmooth.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/shanghaiUni/smooth/BSpline.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/shanghaiUni/smooth/COE.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/shanghaiUni/smooth/DB4.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/shanghaiUni/smooth/DOG.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/shanghaiUni/smooth/Der.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/shanghaiUni/smooth/FIR.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/shanghaiUni/smooth/Haar.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/shanghaiUni/smooth/Marr.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/shanghaiUni/smooth/MaxMinNorm.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/shanghaiUni/smooth/MedSmooth.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/shanghaiUni/smooth/MergerSmooth.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/shanghaiUni/smooth/Morlet.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/shanghaiUni/smooth/SLS.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/shanghaiUni/smooth/SNV.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/shanghaiUni/smooth/SavGol.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/shanghaiUni/smooth/SmoothCommonFunction.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/shanghaiUni/smooth/WeightedAverage.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/shanghaiUni/smooth/WindowSmooth.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/shanghaiUni/smooth/ZeroMeanNorm.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/smooth/gui/SmoothGUI.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/smooth/gui/SmoothProcess.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/smooth/parameter/SmoothParameters.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/douframe/AlgorithmFrame.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/douframe/BP_1.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/douframe/BoXingXuanZe.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/douframe/BpDeep.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/douframe/BpDeepTest.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/douframe/FileAction.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/douframe/SavGol.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/douframe/Svm.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/douframe/Theleastsquaremethod.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/douframe/WriteTo.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/douframe/readspa.java" charset="UTF-8" />
+  </component>
+</project>

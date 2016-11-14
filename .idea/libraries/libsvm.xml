@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="libsvm">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../../libsvm-3.21/java/libsvm.jar!/" />
+      <root url="file://$PROJECT_DIR$/../../poi.jar(1)/poi.jar" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+    <jarDirectory url="file://$PROJECT_DIR$/../../poi.jar(1)/poi.jar" recursive="false" />
+  </library>
+</component>

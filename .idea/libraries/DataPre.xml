@@ -1,0 +1,19 @@
+<component name="libraryTable">
+  <library name="DataPre">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../../逗数据软件/DataPre.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../逗数据软件/draw.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../逗数据软件/drawPic.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../逗数据软件/drawplot.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../逗数据软件/javabuilder.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../逗数据软件/joone-engine.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../逗数据软件/kmeanss.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../逗数据软件/matrixplot.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../逗数据软件/myzoom(1).jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../逗数据软件/myzoom.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../逗数据软件/pcaa.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
+	<classpathentry kind="lib" path="G:/逗数据软件/javabuilder.jar"/>
+	<classpathentry kind="lib" path="G:/逗数据软件/drawPic.jar"/>
+	<classpathentry kind="lib" path="G:/逗数据软件/DataPre.jar"/>
+	<classpathentry kind="lib" path="G:/逗数据软件/poi.jar/poi.jar/dom4j-1.6.1.jar"/>
+	<classpathentry kind="lib" path="G:/逗数据软件/poi.jar/poi.jar/junit-3.8.1.jar"/>
+	<classpathentry kind="lib" path="G:/逗数据软件/poi.jar/poi.jar/log4j-1.2.13.jar"/>
+	<classpathentry kind="lib" path="G:/逗数据软件/poi.jar/poi.jar/poi-3.8-20120326.jar"/>
+	<classpathentry kind="lib" path="G:/逗数据软件/poi.jar/poi.jar/poi-scratchpad-3.8-20120326.jar"/>
+	<classpathentry kind="lib" path="G:/逗数据软件/poi.jar/poi.jar/stax-api-1.0.1.jar"/>
+	<classpathentry kind="lib" path="G:/逗数据软件/poi.jar/poi.jar/xmlbeans-2.3.0.jar"/>
+	<classpathentry kind="lib" path="G:/逗数据软件/poi.jar/poi.jar/poi-ooxml-3.8-20120326.jar"/>
+	<classpathentry kind="lib" path="G:/逗数据软件/poi.jar/poi.jar/poi-ooxml-schemas-3.8-20120326.jar"/>
+	<classpathentry kind="lib" path="G:/逗数据软件/matrixplot.jar"/>
+	<classpathentry kind="lib" path="G:/逗数据软件/kmeanss.jar"/>
+	<classpathentry kind="lib" path="G:/逗数据软件/pcaa.jar"/>
+	<classpathentry kind="lib" path="G:/逗数据软件/myzoom(1).jar"/>
+	<classpathentry kind="lib" path="G:/逗数据软件/joone-engine.jar"/>
+	<classpathentry kind="lib" path="G:/逗数据软件/libsvm-3.21/java/libsvm.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
