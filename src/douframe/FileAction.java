@@ -82,75 +82,75 @@ public class FileAction {
 	public void OpenFiles()//打开文件夹
 	{
 		//		frame = new JFrame("文件选择");
-		fileChooser=new JFileChooser();  
-		fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY );  
-		int returnVal = fileChooser.showDialog(new JLabel(), "选择");  
-		if(returnVal == fileChooser.APPROVE_OPTION)
-		{
-			File file=fileChooser.getSelectedFile();  
-			if(file.isDirectory()){
-				String path= file.getAbsolutePath();
-
-				files = file.listFiles();
-				try {	
-					//					JOptionPane.showMessageDialog(null, "请等待文件加载完成", "消息提示", JOptionPane.WARNING_MESSAGE);
-					for(File s : files)
-					{
-						nameList.add(s.getAbsolutePath());
-						fwaveres  = null;
-						fabres = null;
-						DataPre p = new DataPre();
-						System.out.println(s.getAbsolutePath());
-						Object[] res = p.DataPre(2,s.getAbsolutePath());
-						String[] wave = res[0].toString().trim().split("    ");
-						fwaveres = new String[wave.length-1];
-						String[] abs = res[1].toString().trim().split("    ");
-						fabres = new String[abs.length-1];
-
-						String content = "";
-
-						for(int i = wave.length-1,j=0;i>0;i--,j++)//第一个数为数据量级 即 乘 e的n次方
-						{	
-							if(wave[i].contains("Column"))
-							{
-
-								fwaveres[j] = wave[i].split("Column")[0];
-								fwaveres[j] = Float.parseFloat(su.replaceBlank(fwaveres[j]))*1000+"";
-								//								System.out.println(fwaveres[j]);
-								fabres[j] = abs[i].split("Column")[0];
-								fabres[j] =  su.replaceBlank(fabres[j]);
-								//								System.out.println(fabres[j]);
-							}
-							else
-							{
-								fwaveres[j] = Float.parseFloat(wave[i])*1000+"";
-								fabres[j] =  abs[i];
-							}
-							if(i==1)
-							{content = content+fwaveres[j]+","+fabres[j]+",";break;}
-							content = content+fwaveres[j]+","+fabres[j]+",\r\n";
-						}
-						//						System.out.println("ssss");
-						WriteTo  wt = new WriteTo();
-						wt.writeTo(s.getParentFile().getParentFile().getAbsolutePath()+"\\"+s.getName().replace(".SPA", "")+".csv",content);
-					}
-					JOptionPane.showMessageDialog(null, "文件加载完成", "消息提示", JOptionPane.WARNING_MESSAGE);
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				finally
-				{
-					fileChooser = null;
-					path = null;
-					files = null;
-				}
-			}
-			else if(file.isFile()){  
-				JOptionPane.showMessageDialog(null, "文件路径错误", "消息提示", JOptionPane.ERROR_MESSAGE);
-			} 
-		} 
-
+//		fileChooser=new JFileChooser();
+//		fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY );
+//		int returnVal = fileChooser.showDialog(new JLabel(), "选择");
+//		if(returnVal == fileChooser.APPROVE_OPTION)
+//		{
+//			File file=fileChooser.getSelectedFile();
+//			if(file.isDirectory()){
+//				String path= file.getAbsolutePath();
+//
+//				files = file.listFiles();
+//				try {
+//					//					JOptionPane.showMessageDialog(null, "请等待文件加载完成", "消息提示", JOptionPane.WARNING_MESSAGE);
+//					for(File s : files)
+//					{
+//						nameList.add(s.getAbsolutePath());
+//						fwaveres  = null;
+//						fabres = null;
+//						DataPre p = new DataPre();
+//						System.out.println(s.getAbsolutePath());
+//						Object[] res = p.DataPre(2,s.getAbsolutePath());
+//						String[] wave = res[0].toString().trim().split("    ");
+//						fwaveres = new String[wave.length-1];
+//						String[] abs = res[1].toString().trim().split("    ");
+//						fabres = new String[abs.length-1];
+//
+//						String content = "";
+//
+//						for(int i = wave.length-1,j=0;i>0;i--,j++)//第一个数为数据量级 即 乘 e的n次方
+//						{
+//							if(wave[i].contains("Column"))
+//							{
+//
+//								fwaveres[j] = wave[i].split("Column")[0];
+//								fwaveres[j] = Float.parseFloat(su.replaceBlank(fwaveres[j]))*1000+"";
+//								//								System.out.println(fwaveres[j]);
+//								fabres[j] = abs[i].split("Column")[0];
+//								fabres[j] =  su.replaceBlank(fabres[j]);
+//								//								System.out.println(fabres[j]);
+//							}
+//							else
+//							{
+//								fwaveres[j] = Float.parseFloat(wave[i])*1000+"";
+//								fabres[j] =  abs[i];
+//							}
+//							if(i==1)
+//							{content = content+fwaveres[j]+","+fabres[j]+",";break;}
+//							content = content+fwaveres[j]+","+fabres[j]+",\r\n";
+//						}
+//						//						System.out.println("ssss");
+//						WriteTo  wt = new WriteTo();
+//						wt.writeTo(s.getParentFile().getParentFile().getAbsolutePath()+"\\"+s.getName().replace(".SPA", "")+".csv",content);
+//					}
+//					JOptionPane.showMessageDialog(null, "文件加载完成", "消息提示", JOptionPane.WARNING_MESSAGE);
+//				} catch (Exception e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+//				finally
+//				{
+//					fileChooser = null;
+//					path = null;
+//					files = null;
+//				}
+//			}
+//			else if(file.isFile()){
+//				JOptionPane.showMessageDialog(null, "文件路径错误", "消息提示", JOptionPane.ERROR_MESSAGE);
+//			}
+//		}
+		//上面的代码为原本读取spa文件，现废弃。
 	}
 
 	public double[][] chooseFeatureFile(String text)
@@ -251,8 +251,9 @@ public class FileAction {
 					fileChooser = null;
 
 				}
+				return true;
 			}
-			return true;
+
 		}
 		return false;
 	}

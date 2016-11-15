@@ -23,6 +23,7 @@ public class AlgorithmFrame extends JFrame {
     public static String to;
     public static JFrame jf;
     public static JFrame jfjuzheng;
+    public static boolean isChooseFileEnd = false;
     TextField row;
     TextField classrow;
     TextField col;
@@ -140,7 +141,77 @@ public class AlgorithmFrame extends JFrame {
     private class OpenFilesAction implements ActionListener {
 
         public void actionPerformed(ActionEvent e) {
-            file.OpenFiles();
+            jfjuzheng = new JFrame("选取文件");
+            JPanel jp = new JPanel();
+            jfjuzheng.setSize(500,150);
+            jfjuzheng.setLocation(350,100);
+            jfjuzheng.setVisible(true);
+            //				jfjuzheng.setLayout(null);
+            //				jp.setPreferredSize(new Dimension(280, 192));
+//            JLabel classnum = new JLabel("类  数");
+//            lei = new TextField();
+            JLabel allLeftpoint = new JLabel("左上坐标");
+            JLabel allLableXLeft = new JLabel("X:");
+            allLeftXText = new TextField();
+            JLabel allLableYLeft = new JLabel("Y:");
+            allLeftYText = new TextField();
+            JLabel allRightpoint = new JLabel("右下坐标");
+            JLabel allLableXRight = new JLabel("X:");
+            allRightXText = new TextField();
+            JLabel allLableYRight = new JLabel("Y:");
+            allRightYText = new TextField();
+
+
+
+            JLabel leftpoint = new JLabel("选取左上坐标");
+            JLabel lableXLeft = new JLabel("X:");
+            leftXText = new TextField();
+            JLabel lableYLeft = new JLabel("Y:");
+            leftYText = new TextField();
+
+            JLabel rightpoint = new JLabel("选取右下坐标");
+            JLabel lableXRight = new JLabel("X:");
+            rightXText = new TextField();
+            JLabel lableYRight = new JLabel("Y:");
+            rightYText = new TextField();
+
+
+            JLabel labledanwei = new JLabel("步长:");
+            danwei = new TextField();
+            JLabel XRight1 = new JLabel("X:");
+            JLabel XRight2 = new JLabel("X:");
+            JLabel YRight1 = new JLabel("Y:");
+            JLabel YRight2 = new JLabel("Y:");
+
+//            jp.add(classnum);
+//            jp.add(lei);
+            jp.add(allLeftpoint);
+            jp.add(XRight1);
+            jp.add(allLeftXText);
+            jp.add(YRight1);
+            jp.add(allLeftYText);
+            jp.add(allRightpoint);
+            jp.add(XRight2);
+            jp.add(allRightXText);
+            jp.add(YRight2);
+            jp.add(allRightYText);
+            jp.add(leftpoint);
+            jp.add(lableXLeft);
+            jp.add(leftXText);
+            jp.add(lableYLeft);
+            jp.add(leftYText);
+            jp.add(rightpoint);
+            jp.add(lableXRight);
+            jp.add(rightXText);
+            jp.add(lableYRight);
+            jp.add(rightYText);
+            jp.add(labledanwei);
+            jp.add(danwei);
+
+            JButton bt = new JButton("选择");
+            bt.addActionListener(new  FileChooseListener());
+            jp.add(bt);
+            jfjuzheng.getContentPane().add(jp);
         }
     }
 
@@ -350,57 +421,55 @@ public class AlgorithmFrame extends JFrame {
 //            bp.train(50, t);
 //            lableres = bp.getPredict(predictfeature);
 //			lableres=bp.BpDeepTest(feature, lable);
-
-
             double[][] feature = new FileAction().chooseFeatureFile("输入训练特征集");
-            ArrayList<String> allable = new FileAction().chooseLabelFile();//返回的第一个为label的父文件夹路径
-            double[][] predictfeature = new FileAction().chooseFeatureFile("输入预测特征集");
-            double[] lable = new double[allable.size() - 1];
-            double[] lableres = new double[allable.size() - 1];
-            Set<Double> set = new TreeSet<Double>();
-            for (int i = 0; i < allable.size() - 1; i++) {
-                lable[i] = Double.parseDouble(allable.get(i + 1));
-                set.add(lable[i]);
-            }
 
-            BP bp = new BP(feature[0].length, 10,set.size());
-            for(int time = 0;time<100;time++) {
-                for (int i = 0; i < feature.length; i++) {
-//                System.out.println(i);
-                    double[] labeltrain = new double[set.size()];
-                    for (int j = 0; j < set.size(); j++) {
-                        if (j == lable[i]-1)
-                            labeltrain[j] = 1.0;
-                        else
-                        {
-                            labeltrain[j] = 0.0;
+            if(feature!=null)
+            {
+                ArrayList<String> allable = new FileAction().chooseLabelFile();//返回的第一个为label的父文件夹路径
+                if(allable!=null) {
+                    double[][] predictfeature = new FileAction().chooseFeatureFile("输入预测特征集");
+                    if(predictfeature!=null) {
+                        double[] lable = new double[allable.size() - 1];
+                        double[] lableres = new double[allable.size() - 1];
+                        Set<Double> set = new TreeSet<Double>();
+                        for (int i = 0; i < allable.size() - 1; i++) {
+                            lable[i] = Double.parseDouble(allable.get(i + 1));
+                            set.add(lable[i]);
                         }
-//                    System.out.print(labeltrain[j]+",");
+
+                        BP bp = new BP(feature[0].length, 10, set.size());
+                        for (int time = 0; time < 1000; time++) {
+                            for (int i = 0; i < feature.length; i++) {
+                                double[] labeltrain = new double[set.size()];
+                                for (int j = 0; j < set.size(); j++) {
+                                    if (j == lable[i] - 1)
+                                        labeltrain[j] = 1.0;
+                                    else {
+                                        labeltrain[j] = 0.0;
+                                    }
+                                }
+                                bp.train(feature[i], labeltrain);
+                            }
+                        }
+                        for (int row = 0; row < predictfeature.length; row++) {
+                            double[] result = bp.test(predictfeature[row]);
+                            double max = -Integer.MIN_VALUE;
+                            int idx = -1;
+
+                            for (int i = 0; i != set.size(); i++) {
+                                if (result[i] > max) {
+                                    max = result[i];
+                                    idx = i;
+                                }
+
+                            }
+                            System.out.println();
+                            lableres[row] = idx + 1;
+                            System.out.println(idx + 1);
+                        }
                     }
-//                System.out.println();
-                    bp.train(feature[i], labeltrain);
                 }
             }
-
-            WriteTo wt = new WriteTo();
-            long time = System.currentTimeMillis();
-            for (int row = 0; row < predictfeature.length; row++) {
-                double[] result = bp.test(predictfeature[row]);
-                double max = -Integer.MIN_VALUE;
-                int idx = -1;
-
-                for (int i = 0; i != set.size(); i++) {
-                    if (result[i] > max) {
-                        max = result[i];
-                        idx = i;
-                    }
-                    System.out.print(result[i]+"    " );
-
-                }
-                System.out.println();
-                wt.writeToContinue(allable.get(0) + "\\" + time + "labelresult.csv", "类别," + idx);
-            }
-
         }
     }
 
@@ -556,11 +625,6 @@ public class AlgorithmFrame extends JFrame {
             Label YRight1 = new Label("Y:");
             Label YRight2 = new Label("Y:");
 
-            //				Label hanglie = new Label("生成 ");
-            //				classrow= new TextField();
-            //				Label hang = new Label("行 ");
-            //				classcol= new TextField();
-            //				Label lie = new Label("列矩阵 ");
             jp.add(classnum);
             jp.add(lei);
             jp.add(allLeftpoint);
@@ -600,44 +664,53 @@ public class AlgorithmFrame extends JFrame {
 
 
     }
+    int readlength;
+    int readtall;
+    public void selectFiles() {
+
+        if (allRightXText.getText().matches("[0-9]+") && allLeftXText.getText().matches("[0-9]+")) {
+            int allLength = Integer.parseInt(allRightXText.getText()) - Integer.parseInt(allLeftXText.getText()) + 1;//行总长度
+            allLength = allLength / Integer.parseInt(danwei.getText());
+            readlength = Integer.parseInt(rightYText.getText()) - Integer.parseInt(leftYText.getText());//读取行的长度
+            readlength = readlength / Integer.parseInt(danwei.getText()) + 1;
+            int startReadRow = Integer.parseInt(leftXText.getText());
+            int startReadCol = Integer.parseInt(leftYText.getText());
+            startReadCol = startReadCol / Integer.parseInt(danwei.getText());
+            int temp = Integer.parseInt(rightXText.getText());
+            if (temp / Integer.parseInt(danwei.getText()) - startReadRow / Integer.parseInt(danwei.getText()) > 0) {
+                startReadCol++;
+            }
+            readtall = Integer.parseInt(rightXText.getText()) - Integer.parseInt(leftXText.getText()) + 1;
+
+
+            isChooseFileEnd = file.kmeansopenFiles(readtall, readlength, startReadRow, startReadCol, allLength);
+        }
+    }
+    private class FileChooseListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            selectFiles();
+        }
+    }
 
     private class paramKmeansListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-           try
-           {
-               String index = lei.getText();
-
-               if (index.matches("[0-9]+") && allRightXText.getText().matches("[0-9]+") && allLeftXText.getText().matches("[0-9]+")) {
-                   int allLength = Integer.parseInt(allRightXText.getText()) - Integer.parseInt(allLeftXText.getText()) + 1;//行总长度
-                   allLength = allLength / Integer.parseInt(danwei.getText());
-                   int readlength = Integer.parseInt(rightYText.getText()) - Integer.parseInt(leftYText.getText());//读取行的长度
-                   readlength = readlength / Integer.parseInt(danwei.getText())+1;
-                   int startReadRow = Integer.parseInt(leftXText.getText());
-                   int startReadCol = Integer.parseInt(leftYText.getText());
-                   startReadCol = startReadCol / Integer.parseInt(danwei.getText());
-                   int temp = Integer.parseInt(rightXText.getText());
-                   if(temp/ Integer.parseInt(danwei.getText())- startReadRow/ Integer.parseInt(danwei.getText())>0)
-                   {
-                       startReadCol++;
-                   }
-                   int readtall = Integer.parseInt(rightXText.getText()) - Integer.parseInt(leftXText.getText()) + 1;
-
-
-                   file.kmeansopenFiles(readtall, readlength, startReadRow, startReadCol, allLength);
-                   Integer lei2 = Integer.valueOf(index);
-                   System.out.println(file.abslist.size());
-                   if (lei2 <= 0 || lei2 > file.abslist.size()) {
-                       JOptionPane.showMessageDialog(null, "数据输入有误！", "消息提示", JOptionPane.ERROR_MESSAGE);
-                   } else {
-                       file.kmeanshelp(lei2, readtall, readlength);
-                   }
-               }
-           }
-           catch(Exception e1)
-           {
+            try
+            {
+                String index = lei.getText();
+                Integer lei2 = Integer.valueOf(index);
+                System.out.println(file.abslist.size());
+                if (lei2 <= 0 || lei2 > file.abslist.size()) {
+                    JOptionPane.showMessageDialog(null, "数据输入有误！", "消息提示", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    file.kmeanshelp(lei2, readtall, readlength);
+                }
+            }
+            catch(Exception e1)
+            {
                 JOptionPane.showMessageDialog(null, "请输入数字！", "消息提示", JOptionPane.ERROR_MESSAGE);
-           }
+            }
 
         }
     }
