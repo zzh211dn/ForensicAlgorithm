@@ -23,7 +23,7 @@ public class AlgorithmFrame extends JFrame {
     public static String to;
     public static JFrame jf;
     public static JFrame jfjuzheng;
-    public static boolean isChooseFileEnd = false;
+    public static boolean isChooseFileEnd = false;//判断是否选择过文件了。
     TextField row;
     TextField classrow;
     TextField col;
@@ -41,8 +41,8 @@ public class AlgorithmFrame extends JFrame {
     TextField allRightYText ;
     TextField danwei ;
 
-
-
+    int readlength;
+    int readtall;
 
     TextField tf1;
     TextField jztf;
@@ -209,7 +209,7 @@ public class AlgorithmFrame extends JFrame {
             jp.add(danwei);
 
             JButton bt = new JButton("选择");
-            bt.addActionListener(new  FileChooseListener());
+            bt.addActionListener(new FileChooseListener());
             jp.add(bt);
             jfjuzheng.getContentPane().add(jp);
         }
@@ -320,7 +320,6 @@ public class AlgorithmFrame extends JFrame {
         }
     }
 
-
     public static List<List<Double>> String2Double(FileAction file) {
         List<List<Double>> data = new ArrayList<>();
         for (String abs[] : file.getAbslist()) {
@@ -399,7 +398,6 @@ public class AlgorithmFrame extends JFrame {
             }
         }
     }
-
 
     private class BPNNction implements ActionListener {
         public void actionPerformed(ActionEvent e) {
@@ -586,74 +584,13 @@ public class AlgorithmFrame extends JFrame {
             jfjuzheng = new JFrame("Kmeans");
             JPanel jp = new JPanel();
             jfjuzheng.setSize(500,150);
-            jfjuzheng.setLocation(350,100);
+            jfjuzheng.setLocation(250,100);
             jfjuzheng.setVisible(true);
-            //				jfjuzheng.setLayout(null);
-            //				jp.setPreferredSize(new Dimension(280, 192));
             Label classnum = new Label("类数");
             lei = new TextField();
-            Label allLeftpoint = new Label("左上坐标");
-            Label allLableXLeft = new Label("X:");
-            allLeftXText = new TextField();
-            Label allLableYLeft = new Label("Y:");
-            allLeftYText = new TextField();
-            Label allRightpoint = new Label("右下坐标");
-            Label allLableXRight = new Label("X:");
-            allRightXText = new TextField();
-            Label allLableYRight = new Label("Y:");
-            allRightYText = new TextField();
-
-
-
-            Label leftpoint = new Label("选取左上坐标");
-            Label lableXLeft = new Label("X:");
-            leftXText = new TextField();
-            Label lableYLeft = new Label("Y:");
-            leftYText = new TextField();
-
-            Label rightpoint = new Label("选取右下坐标");
-            Label lableXRight = new Label("X:");
-            rightXText = new TextField();
-            Label lableYRight = new Label("Y:");
-            rightYText = new TextField();
-
-
-            Label labledanwei = new Label("步长:");
-            danwei = new TextField();
-            Label XRight1 = new Label("X:");
-            Label XRight2 = new Label("X:");
-            Label YRight1 = new Label("Y:");
-            Label YRight2 = new Label("Y:");
 
             jp.add(classnum);
             jp.add(lei);
-            jp.add(allLeftpoint);
-            jp.add(XRight1);
-            jp.add(allLeftXText);
-            jp.add(YRight1);
-            jp.add(allLeftYText);
-            jp.add(allRightpoint);
-            jp.add(XRight2);
-            jp.add(allRightXText);
-            jp.add(YRight2);
-            jp.add(allRightYText);
-            jp.add(leftpoint);
-            jp.add(lableXLeft);
-            jp.add(leftXText);
-            jp.add(lableYLeft);
-            jp.add(leftYText);
-            jp.add(rightpoint);
-            jp.add(lableXRight);
-            jp.add(rightXText);
-            jp.add(lableYRight);
-            jp.add(rightYText);
-            jp.add(labledanwei);
-            jp.add(danwei);
-            //				jp.add(hanglie);
-            //				jp.add(classrow);
-            //				jp.add(hang);
-            //				jp.add(classcol);
-            //				jp.add(lie);
 
             JButton bt = new JButton("选择");
             bt.addActionListener(new paramKmeansListener());
@@ -664,10 +601,8 @@ public class AlgorithmFrame extends JFrame {
 
 
     }
-    int readlength;
-    int readtall;
-    public void selectFiles() {
 
+    public void selectFiles() {
         if (allRightXText.getText().matches("[0-9]+") && allLeftXText.getText().matches("[0-9]+")) {
             int allLength = Integer.parseInt(allRightXText.getText()) - Integer.parseInt(allLeftXText.getText()) + 1;//行总长度
             allLength = allLength / Integer.parseInt(danwei.getText());
@@ -682,10 +617,10 @@ public class AlgorithmFrame extends JFrame {
             }
             readtall = Integer.parseInt(rightXText.getText()) - Integer.parseInt(leftXText.getText()) + 1;
 
-
-            isChooseFileEnd = file.kmeansopenFiles(readtall, readlength, startReadRow, startReadCol, allLength);
+            isChooseFileEnd = file.openSelectFiles(readtall, readlength, startReadRow, startReadCol, allLength);
         }
     }
+
     private class FileChooseListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -698,6 +633,9 @@ public class AlgorithmFrame extends JFrame {
         public void actionPerformed(ActionEvent e) {
             try
             {
+                if(!isChooseFileEnd) {
+                    new KmeansAction();
+                }
                 String index = lei.getText();
                 Integer lei2 = Integer.valueOf(index);
                 System.out.println(file.abslist.size());
@@ -725,7 +663,6 @@ public class AlgorithmFrame extends JFrame {
                 JOptionPane.showMessageDialog(null, "请先选择文件！", "消息提示", JOptionPane.ERROR_MESSAGE);
         }
     }
-
 
     private class JuzhengChooseAction implements ActionListener {
 
@@ -764,7 +701,6 @@ public class AlgorithmFrame extends JFrame {
         }
 
     }
-
 
     private class jzchooseListener implements ActionListener {
 

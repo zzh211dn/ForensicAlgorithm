@@ -79,79 +79,79 @@ public class FileAction {
 	StringUtils su = new StringUtils();
 
 
-	public void OpenFiles()//打开文件夹
+/*	public void OpenFiles()//打开文件夹
 	{
-		//		frame = new JFrame("文件选择");
-//		fileChooser=new JFileChooser();
-//		fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY );
-//		int returnVal = fileChooser.showDialog(new JLabel(), "选择");
-//		if(returnVal == fileChooser.APPROVE_OPTION)
-//		{
-//			File file=fileChooser.getSelectedFile();
-//			if(file.isDirectory()){
-//				String path= file.getAbsolutePath();
-//
-//				files = file.listFiles();
-//				try {
-//					//					JOptionPane.showMessageDialog(null, "请等待文件加载完成", "消息提示", JOptionPane.WARNING_MESSAGE);
-//					for(File s : files)
-//					{
-//						nameList.add(s.getAbsolutePath());
-//						fwaveres  = null;
-//						fabres = null;
-//						DataPre p = new DataPre();
-//						System.out.println(s.getAbsolutePath());
-//						Object[] res = p.DataPre(2,s.getAbsolutePath());
-//						String[] wave = res[0].toString().trim().split("    ");
-//						fwaveres = new String[wave.length-1];
-//						String[] abs = res[1].toString().trim().split("    ");
-//						fabres = new String[abs.length-1];
-//
-//						String content = "";
-//
-//						for(int i = wave.length-1,j=0;i>0;i--,j++)//第一个数为数据量级 即 乘 e的n次方
-//						{
-//							if(wave[i].contains("Column"))
-//							{
-//
-//								fwaveres[j] = wave[i].split("Column")[0];
-//								fwaveres[j] = Float.parseFloat(su.replaceBlank(fwaveres[j]))*1000+"";
-//								//								System.out.println(fwaveres[j]);
-//								fabres[j] = abs[i].split("Column")[0];
-//								fabres[j] =  su.replaceBlank(fabres[j]);
-//								//								System.out.println(fabres[j]);
-//							}
-//							else
-//							{
-//								fwaveres[j] = Float.parseFloat(wave[i])*1000+"";
-//								fabres[j] =  abs[i];
-//							}
-//							if(i==1)
-//							{content = content+fwaveres[j]+","+fabres[j]+",";break;}
-//							content = content+fwaveres[j]+","+fabres[j]+",\r\n";
-//						}
-//						//						System.out.println("ssss");
-//						WriteTo  wt = new WriteTo();
-//						wt.writeTo(s.getParentFile().getParentFile().getAbsolutePath()+"\\"+s.getName().replace(".SPA", "")+".csv",content);
-//					}
-//					JOptionPane.showMessageDialog(null, "文件加载完成", "消息提示", JOptionPane.WARNING_MESSAGE);
-//				} catch (Exception e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
-//				finally
-//				{
-//					fileChooser = null;
-//					path = null;
-//					files = null;
-//				}
-//			}
-//			else if(file.isFile()){
-//				JOptionPane.showMessageDialog(null, "文件路径错误", "消息提示", JOptionPane.ERROR_MESSAGE);
-//			}
-//		}
-		//上面的代码为原本读取spa文件，现废弃。
-	}
+				frame = new JFrame("文件选择");
+		fileChooser=new JFileChooser();
+		fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY );
+		int returnVal = fileChooser.showDialog(new JLabel(), "选择");
+		if(returnVal == fileChooser.APPROVE_OPTION)
+		{
+			File file=fileChooser.getSelectedFile();
+			if(file.isDirectory()){
+				String path= file.getAbsolutePath();
+
+				files = file.listFiles();
+				try {
+					//					JOptionPane.showMessageDialog(null, "请等待文件加载完成", "消息提示", JOptionPane.WARNING_MESSAGE);
+					for(File s : files)
+					{
+						nameList.add(s.getAbsolutePath());
+						fwaveres  = null;
+						fabres = null;
+						DataPre p = new DataPre();
+						System.out.println(s.getAbsolutePath());
+						Object[] res = p.DataPre(2,s.getAbsolutePath());
+						String[] wave = res[0].toString().trim().split("    ");
+						fwaveres = new String[wave.length-1];
+						String[] abs = res[1].toString().trim().split("    ");
+						fabres = new String[abs.length-1];
+
+						String content = "";
+
+						for(int i = wave.length-1,j=0;i>0;i--,j++)//第一个数为数据量级 即 乘 e的n次方
+						{
+							if(wave[i].contains("Column"))
+							{
+
+								fwaveres[j] = wave[i].split("Column")[0];
+								fwaveres[j] = Float.parseFloat(su.replaceBlank(fwaveres[j]))*1000+"";
+								//								System.out.println(fwaveres[j]);
+								fabres[j] = abs[i].split("Column")[0];
+								fabres[j] =  su.replaceBlank(fabres[j]);
+								//								System.out.println(fabres[j]);
+							}
+							else
+							{
+								fwaveres[j] = Float.parseFloat(wave[i])*1000+"";
+								fabres[j] =  abs[i];
+							}
+							if(i==1)
+							{content = content+fwaveres[j]+","+fabres[j]+",";break;}
+							content = content+fwaveres[j]+","+fabres[j]+",\r\n";
+						}
+						//						System.out.println("ssss");
+						WriteTo  wt = new WriteTo();
+						wt.writeTo(s.getParentFile().getParentFile().getAbsolutePath()+"\\"+s.getName().replace(".SPA", "")+".csv",content);
+					}
+					JOptionPane.showMessageDialog(null, "文件加载完成", "消息提示", JOptionPane.WARNING_MESSAGE);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				finally
+				{
+					fileChooser = null;
+					path = null;
+					files = null;
+				}
+			}
+			else if(file.isFile()){
+				JOptionPane.showMessageDialog(null, "文件路径错误", "消息提示", JOptionPane.ERROR_MESSAGE);
+			}
+		}
+		上面的代码为原本读取spa文件，现废弃。
+	}*/
 
 	public double[][] chooseFeatureFile(String text)
 	{
@@ -201,7 +201,7 @@ public class FileAction {
 		return null;
 	}
 
-	public boolean kmeansopenFiles(int readTall,int readLength,int startReadRow,int startReadCol,int allLength) {
+	public boolean openSelectFiles(int readTall,int readLength,int startReadRow,int startReadCol,int allLength) {
 		fileChooser=new JFileChooser();
 		fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY );
 		int returnVal = fileChooser.showDialog(new JLabel(), "选择");
@@ -211,7 +211,6 @@ public class FileAction {
 			if(file.isDirectory()){
 				String path= file.getAbsolutePath();
 				files = file.listFiles();
-				//draw(path)
 				abslist =new ArrayList<String[]>();
 				try {
 					for(int i = 0;i<readTall;i++)
@@ -577,8 +576,7 @@ public class FileAction {
 			}
 		}
 
-		public void baoCun()//创建界面选波形
-		{
+		public void baoCun(){//创建界面选波形
 			JFileChooser fileChooser1;
 			fileChooser1=new JFileChooser();  
 			fileChooser1.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY );  
@@ -664,8 +662,8 @@ public class FileAction {
 			}
 			return false;
 		}
-		public boolean openFiles(String name)
-		{
+
+		public boolean openFiles(String name) {
 			fileChooser=new JFileChooser();  
 			fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY );  
 			int returnVal = fileChooser.showDialog(new JLabel(), name);
@@ -749,7 +747,38 @@ public class FileAction {
 
 		}
 
+	public void kmeanshelp(int leinum,int row ,int col) {
 
+		MWNumericArray JZabresparttInt = null; // 存放y值的数组
+		int size =  abslist.size();
+		int len = abslist.get(0).length;
+		int n = size*len;
+		int[] dims = { 1, n+4 };
+		JZabresparttInt = MWNumericArray.newInstance(dims, MWClassID.DOUBLE,
+				MWComplexity.REAL);
+		JZabresparttInt.set(1,size);
+		JZabresparttInt.set(2,leinum);
+		JZabresparttInt.set(3,row);
+		JZabresparttInt.set(4,col);
+		int m = 0;
+
+		for(int i=0;i<size;i++)//前两个数为行列值，第三个数开始为矩阵数值
+		{
+			for(int j = 0;j<len;j++)
+			{
+				JZabresparttInt.set(m+5 ,Float.parseFloat(abslist.get(i)[j]));
+				m++;
+			}
+		}
+		try {
+			kmeanss mp = new kmeanss();
+			mp.kmeanss(JZabresparttInt);
+		} catch (MWException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
 
 		/*public boolean kmeansopenFiles() {
 			fileChooser=new JFileChooser();  
@@ -809,42 +838,7 @@ public class FileAction {
 			return false;
 		}*/
 
-		public void kmeanshelp(int leinum,int row ,int col) {
 
-			MWNumericArray JZabresparttInt = null; // 存放y值的数组
-			int size =  abslist.size();
-			int len = abslist.get(0).length;
-			int n = size*len;
-			int[] dims = { 1, n+4 };
-			JZabresparttInt = MWNumericArray.newInstance(dims, MWClassID.DOUBLE,
-					MWComplexity.REAL);
-			JZabresparttInt.set(1,size);
-			JZabresparttInt.set(2,leinum);
-			JZabresparttInt.set(3,row);
-			JZabresparttInt.set(4,col);
-			int m = 0;
-			//		for(int i = 1;i<=4;i++)
-			//		{
-			//			System.out.println(JZabresparttInt.get(i));
-			//		}
-			for(int i=0;i<size;i++)//前两个数为行列值，第三个数开始为矩阵数值
-			{		
-				for(int j = 0;j<len;j++)
-				{
-					JZabresparttInt.set(m+5 ,Float.parseFloat(abslist.get(i)[j]));
-					m++;
-				}
-			}
-			try {
-				kmeanss mp = new kmeanss();
-				mp.kmeanss(JZabresparttInt);
-				//			AlgorithmFrame.jfjuzheng.dispose();
-			} catch (MWException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-		}
 
 
 	}
