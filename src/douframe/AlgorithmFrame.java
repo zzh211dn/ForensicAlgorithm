@@ -449,6 +449,8 @@ public class AlgorithmFrame extends JFrame {
                                 bp.train(feature[i], labeltrain);
                             }
                         }
+                        WriteTo wt = new WriteTo();
+                        long time = System.currentTimeMillis();
                         for (int row = 0; row < predictfeature.length; row++) {
                             double[] result = bp.test(predictfeature[row]);
                             double max = -Integer.MIN_VALUE;
@@ -459,11 +461,11 @@ public class AlgorithmFrame extends JFrame {
                                     max = result[i];
                                     idx = i;
                                 }
+                                System.out.print(result[i]+"    " );
 
                             }
                             System.out.println();
-                            lableres[row] = idx + 1;
-                            System.out.println(idx + 1);
+                            wt.writeToContinue(allable.get(0) + "\\" + time + "labelresult.csv", "类别," + idx);
                         }
                     }
                 }
