@@ -583,21 +583,27 @@ public class AlgorithmFrame extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
 
-            jfjuzheng = new JFrame("Kmeans");
-            JPanel jp = new JPanel();
-            jfjuzheng.setSize(300,80);
-            jfjuzheng.setLocation(250,100);
-            jfjuzheng.setVisible(true);
-            JLabel classnum = new JLabel("类数");
-            lei = new TextField();
+            if(!isChooseFileEnd) {
+                JOptionPane.showMessageDialog(null, "请先聚类所需选择文件！", "消息提示", JOptionPane.INFORMATION_MESSAGE);
+                new OpenFilesAction().actionPerformed(e);
+            }
+            else {
+                jfjuzheng = new JFrame("Kmeans");
+                JPanel jp = new JPanel();
+                jfjuzheng.setSize(300, 80);
+                jfjuzheng.setLocation(250, 100);
+                jfjuzheng.setVisible(true);
+                JLabel classnum = new JLabel("类数");
+                lei = new TextField();
 
-            jp.add(classnum);
-            jp.add(lei);
+                jp.add(classnum);
+                jp.add(lei);
 
-            JButton bt = new JButton("选择");
-            bt.addActionListener(new paramKmeansListener());
-            jp.add(bt);
-            jfjuzheng.getContentPane().add(jp);
+                JButton bt = new JButton("选择");
+                bt.addActionListener(new paramKmeansListener());
+                jp.add(bt);
+                jfjuzheng.getContentPane().add(jp);
+            }
             //				if(file.kmeansopenFiles())
         }
 
@@ -635,16 +641,15 @@ public class AlgorithmFrame extends JFrame {
         public void actionPerformed(ActionEvent e) {
             try
             {
-                if(!isChooseFileEnd) {
-                    new KmeansAction();
-                }
+
+
                 String index = lei.getText();
                 Integer lei2 = Integer.valueOf(index);
-                System.out.println(file.abslist.size());
                 if (lei2 <= 0 || lei2 > file.abslist.size()) {
                     JOptionPane.showMessageDialog(null, "数据输入有误！", "消息提示", JOptionPane.ERROR_MESSAGE);
                 } else {
                     file.kmeanshelp(lei2, readtall, readlength);
+
                 }
             }
             catch(Exception e1)

@@ -560,7 +560,6 @@ public class FileAction {
 					MWComplexity.REAL);
 			JZabresparttInt.set(1,row);
 			JZabresparttInt.set(2,col);
-			System.out.println(wavelist.size());
 			for(int i=0;i<wavelist.size();i++)//前两个数为行列值，第三个数开始为矩阵数值
 			{		
 				absjuzheng[i] = abslist.get(i)[index];
@@ -691,8 +690,6 @@ public class FileAction {
 								}
 								fabres = new String[arabres.size()];
 
-								System.out.println(arabres.size());
-
 								for(int i = 0;i<arabres.size();i++)
 								{
 									fabres[i]=arabres.get(i);
@@ -709,7 +706,6 @@ public class FileAction {
 					{
 						files = null;
 						fileChooser = null;
-
 					}
 				}
 				return true;
