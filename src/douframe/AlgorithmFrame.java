@@ -585,10 +585,10 @@ public class AlgorithmFrame extends JFrame {
 
             jfjuzheng = new JFrame("Kmeans");
             JPanel jp = new JPanel();
-            jfjuzheng.setSize(500,150);
+            jfjuzheng.setSize(300,80);
             jfjuzheng.setLocation(250,100);
             jfjuzheng.setVisible(true);
-            Label classnum = new Label("类数");
+            JLabel classnum = new JLabel("类数");
             lei = new TextField();
 
             jp.add(classnum);

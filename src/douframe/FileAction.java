@@ -690,6 +690,9 @@ public class FileAction {
 									arabres.add(res[1]);
 								}
 								fabres = new String[arabres.size()];
+
+								System.out.println(arabres.size());
+
 								for(int i = 0;i<arabres.size();i++)
 								{
 									fabres[i]=arabres.get(i);
@@ -719,10 +722,10 @@ public class FileAction {
 			MWNumericArray JZabresparttInt = null; // 存放y值的数组
 			int size =  abslist.size();
 			int len = abslist.get(0).length;
+
 			int n = size*len;
 			int[] dims = { 1, n+2 };
-			JZabresparttInt = MWNumericArray.newInstance(dims, MWClassID.DOUBLE,
-					MWComplexity.REAL);
+			JZabresparttInt = MWNumericArray.newInstance(dims, MWClassID.DOUBLE,MWComplexity.REAL);
 			JZabresparttInt.set(1,ws);
 			JZabresparttInt.set(2,size);
 
