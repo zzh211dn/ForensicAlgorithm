@@ -1,7 +1,11 @@
 package douframe;
 
+import javax.swing.*;
+import java.io.File;
+import java.io.FileFilter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.math.BigDecimal;
 
 public class WriteTo {
 
@@ -44,12 +48,12 @@ public class WriteTo {
 	}
 
 	public static void main(String[] args) {
-		int value = 32;
-		do {
-
-			System.out.print((value & 1)+" , ");
-			value >>>= 1;
-		} while (value != 0);
+//		Object[] splitPcaResult = pcaResult[0].toString().split("\n");
+//		for(int i= 0;i<splitPcaResult.length;i++) {
+//			if(splitPcaResult[i].toString().contains("Columns")||splitPcaResult[i].toString().equals(""))
+//				continue;
+//			System.out.println("row:" + i + "是："+splitPcaResult[i]+",");
+//		}
 	}
 
 }

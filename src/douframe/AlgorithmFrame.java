@@ -8,12 +8,23 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
+
+import org.encog.Encog;
+import org.encog.ml.data.MLData;
+import org.encog.ml.data.MLDataPair;
+import org.encog.ml.data.MLDataSet;
+import org.encog.ml.data.basic.BasicMLDataSet;
+import org.encog.ml.svm.SVM;
+import org.encog.ml.svm.training.SVMTrain;
+
 
 
 public class AlgorithmFrame extends JFrame {
@@ -47,6 +58,9 @@ public class AlgorithmFrame extends JFrame {
     TextField tf1;
     TextField jztf;
     TextField tf2;
+
+
+    String pathExist = "";
     //	private JTable table;
 
     /**
@@ -60,6 +74,7 @@ public class AlgorithmFrame extends JFrame {
      * Create the frame.
      */
     public AlgorithmFrame() {
+
         setResizable(false);
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -76,9 +91,13 @@ public class AlgorithmFrame extends JFrame {
         //		mntmNewMenuItem_3.addActionListener(new OpenFileAction());
         //		mnNewMenu_1.add(mntmNewMenuItem_3);
 
-        JMenuItem mntmNewMenuItem = new JMenuItem("数据预处理");
+        JMenuItem mntmNewMenuItem = new JMenuItem("选择文件");
         mntmNewMenuItem.addActionListener(new OpenFilesAction());
         mnNewMenu_1.add(mntmNewMenuItem);
+
+        JMenuItem mntmNewMenuItemExist = new JMenuItem("选择已有文件");
+        mntmNewMenuItemExist.addActionListener(new OpenExistFilesAction());
+        mnNewMenu_1.add(mntmNewMenuItemExist);
 
 
         JMenuItem mntmNewMenuItem4 = new JMenuItem("预处理算法");
@@ -137,6 +156,15 @@ public class AlgorithmFrame extends JFrame {
         getContentPane().add(scroll, BorderLayout.CENTER);
 
     }
+
+    private class OpenExistFilesAction implements ActionListener {
+
+        public void actionPerformed(ActionEvent e) {
+            pathExist =  file.openSelectFiles();
+            isChooseFileEnd = true;
+        }
+    }
+
 
     private class OpenFilesAction implements ActionListener {
 
@@ -221,9 +249,8 @@ public class AlgorithmFrame extends JFrame {
         List<String> label = new ArrayList<String>();
         List<String> nameList = new ArrayList<String>();
         WriteTo write = new WriteTo();
-        String data = "";
-        String dataTotest = "";
-        String testData = "";
+        String content = "";
+
 
         public void actionPerformed(ActionEvent e) {
             if (file.openFiles("选择训练集")) {
@@ -234,70 +261,62 @@ public class AlgorithmFrame extends JFrame {
                     label = file.chooseLabelFile("选择标签");
                     DecimalFormat df = new DecimalFormat();
                     df.setMaximumFractionDigits(6); // 设置最大小数位
-                    testData += "\r\n";
+
+                    double[][] dataTotest = new double[testDatas.size()][testDatas.get(0).size()];
+
+                    double[][] data = new double[datas.size()][datas.get(0).size()];
+
+                    double[][] DLabel = new double[label.size()][1];
+
+                    double[][] TLabel = new double[testDatas.size()][1];
 
                     for (int i = 0; i < testDatas.size(); i++) {
                         for (int j = 0; j < testDatas.get(i).size(); j++) {
-                            String temp = df.format(testDatas.get(i).get(j));
-                            testData += temp;
-                            if (j != testDatas.get(i).size() - 1)
-                                testData += " ";
+                            dataTotest[i][j]=testDatas.get(i).get(j);
                         }
-                        if (i < testDatas.size() - 1)
-                            testData += "\r\n";
                     }
-
-                    dataTotest += "\r\n";
                     for (int i = 0; i < datas.size(); i++) {
                         for (int j = 0; j < datas.get(i).size(); j++) {
-                            String temp = df.format(datas.get(i).get(j));
-                            dataTotest  += temp;
-                            if (j != datas.get(i).size() - 1)
-                                dataTotest += " ";
+                            data[i][j]=datas.get(i).get(j);
                         }
-                        if (i < datas.size() - 1)
-                            dataTotest += "\r\n";
+                    }
+                    for(int i=0;i<label.size();i++){
+                        DLabel[i][0] = Double.valueOf(label.get(i));
+                    }
+                    // create a SVM for classification, change false to true for regression
+                    SVM svm = new SVM(testDatas.get(0).size(),true);
+
+                    // create training data
+                    MLDataSet trainingSet = new BasicMLDataSet(data,DLabel);
+
+                    // train the SVM
+                    final SVMTrain train = new SVMTrain(svm, trainingSet);
+                    train.iteration();
+                    train.finishTraining();
+
+
+                    for(int i=0;i<dataTotest.length;i++){
+                        TLabel[i][0] = Math.random();
                     }
 
-                    data += "\r\n";
-                    for (int i = 0; i < datas.size(); i++) {
-                        data += label.get(i) + " ";
-                        for (int j = 0; j < datas.get(i).size(); j++) {
-                            String temp = df.format(datas.get(i).get(j));
-                            data += temp;
-                            if (j != datas.get(i).size() - 1)
-                                data += " ";
-                        }
-                        if (i < datas.size() - 1)
-                            data += "\r\n";
+
+                    MLDataSet testSet = new BasicMLDataSet(dataTotest,TLabel);
+                    // test the SVM
+                    System.out.println("SVM Results:");
+                    int index = 0;
+
+                    for(MLDataPair pair: testSet ) {
+                        final MLData output = svm.compute(pair.getInput());
+                        content+=nameList.get(index)
+                                + ", predist=" + output.getData(0)+"\r\n";
+                        index++;
                     }
 
-                    File file = new File(".\\temp");
-                    if (!file.exists()) {
-                        file.mkdirs();
-                    }
-                    write.writeTo(".\\temp\\data.csv", data);
-                    write.writeTo(".\\temp\\dataTotest.csv", dataTotest);
-                    write.writeTo(".\\temp\\testData.csv", testData);
+                    Encog.getInstance().shutdown();
                 }
-                SimplifiedSmo svm = new SimplifiedSmo();
-                String[] accura = svm.runSVM(label.size(), datas.get(0).size(),0);
-                int total = accura.length+1;
-                int right = 0;
-                for(int i=0;i<accura.length;i++){
-                    if(accura[i].equals(label.get(i)))
-                        right++;
-                }
-                double acc =(double) right/total;
-                String[] result = svm.runSVM(label.size(), datas.get(0).size(),1);
+
                 JTextArea jta = new JTextArea();
-                jta.append("训练准确率为: "+acc+"%"+"\r\n");
-                for (int i = 0; i < result.length; i++) {
-                    jta.append("测试元组: ");
-                    jta.append(nameList.get(i) + " ");
-                    jta.append("类别为: ");
-                    jta.append(result[i] + "\r\n");
-                }
+                jta.append(content);
                 JFrame mv = new JFrame("结果");
                 mv.setLayout(null);
                 //实例化文本框
@@ -314,11 +333,11 @@ public class AlgorithmFrame extends JFrame {
                 mv.setLocation(400, 200);
                 mv.setResizable(false);
                 mv.setVisible(true);
-                mv.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
             }
         }
     }
+
 
     public static List<List<Double>> String2Double(FileAction file) {
         List<List<Double>> data = new ArrayList<>();
@@ -354,7 +373,7 @@ public class AlgorithmFrame extends JFrame {
                     jfjuzheng.setSize(300, 80);
                     jfjuzheng.setLocation(350, 100);
                     jfjuzheng.setVisible(true);
-                    Label name = new Label("K值");
+                    JLabel name = new JLabel("K值");
                     weishu = new TextField();
                     jp.add(name);
                     jp.add(weishu);
@@ -389,7 +408,7 @@ public class AlgorithmFrame extends JFrame {
                             mv.setLocation(400, 200);
                             mv.setResizable(false);
                             mv.setVisible(true);
-                            mv.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//                            mv.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                         }
                     });
                     jp.add(bt);
@@ -465,7 +484,7 @@ public class AlgorithmFrame extends JFrame {
 
                             }
                             System.out.println();
-                            wt.writeToContinue(allable.get(0) + "\\" + time + "labelresult.csv", "类别," + idx);
+                            wt.writeToContinue(allable.get(0) + "\\" + time + "labelresult.csv", "lable," + idx);
                         }
                     }
                 }
@@ -476,13 +495,17 @@ public class AlgorithmFrame extends JFrame {
     private class PCAAction implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            if (file.openFiles("选择数据集")) {
+            if(!isChooseFileEnd) {
+                JOptionPane.showMessageDialog(null, "请先聚类所需选择文件！", "消息提示", JOptionPane.INFORMATION_MESSAGE);
+//                new OpenFilesAction().actionPerformed(e);
+            }
+            else {
                 jfjuzheng = new JFrame("PCA");
                 JPanel jp = new JPanel();
                 jfjuzheng.setSize(300, 80);
                 jfjuzheng.setLocation(350, 100);
                 jfjuzheng.setVisible(true);
-                Label name = new Label("Dimension");
+                JLabel name = new JLabel("Dimension");
                 weishu = new TextField();
                 jp.add(name);
                 jp.add(weishu);
@@ -506,6 +529,7 @@ public class AlgorithmFrame extends JFrame {
                     JOptionPane.showMessageDialog(null, "数据输入有误！", "消息提示", JOptionPane.ERROR_MESSAGE);
                 } else {
                     file.PCAhelp(ws);
+                    jfjuzheng.dispose();
                 }
             } else {
                 JOptionPane.showMessageDialog(null, "请输入数字！", "消息提示", JOptionPane.ERROR_MESSAGE);
@@ -585,7 +609,7 @@ public class AlgorithmFrame extends JFrame {
 
             if(!isChooseFileEnd) {
                 JOptionPane.showMessageDialog(null, "请先聚类所需选择文件！", "消息提示", JOptionPane.INFORMATION_MESSAGE);
-                new OpenFilesAction().actionPerformed(e);
+//                new OpenFilesAction().actionPerformed(e);
             }
             else {
                 jfjuzheng = new JFrame("Kmeans");
@@ -613,19 +637,25 @@ public class AlgorithmFrame extends JFrame {
     public void selectFiles() {
         if (allRightXText.getText().matches("[0-9]+") && allLeftXText.getText().matches("[0-9]+")) {
             int allLength = Integer.parseInt(allRightXText.getText()) - Integer.parseInt(allLeftXText.getText()) + 1;//行总长度
+
             allLength = allLength / Integer.parseInt(danwei.getText());
-            readlength = Integer.parseInt(rightYText.getText()) - Integer.parseInt(leftYText.getText());//读取行的长度
+
+            readlength = Integer.parseInt(rightXText.getText()) - Integer.parseInt(leftXText.getText());//读取行的长度
+
             readlength = readlength / Integer.parseInt(danwei.getText()) + 1;
+
             int startReadRow = Integer.parseInt(leftXText.getText());
+
             int startReadCol = Integer.parseInt(leftYText.getText());
             startReadCol = startReadCol / Integer.parseInt(danwei.getText());
-            int temp = Integer.parseInt(rightXText.getText());
-            if (temp / Integer.parseInt(danwei.getText()) - startReadRow / Integer.parseInt(danwei.getText()) > 0) {
-                startReadCol++;
-            }
-            readtall = Integer.parseInt(rightXText.getText()) - Integer.parseInt(leftXText.getText()) + 1;
+
+            readtall = Integer.parseInt(rightYText.getText()) - Integer.parseInt(leftYText.getText()) + 1;
 
             isChooseFileEnd = file.openSelectFiles(readtall, readlength, startReadRow, startReadCol, allLength);
+            if(isChooseFileEnd)
+            {
+                jfjuzheng.dispose();
+            }
         }
     }
 
@@ -641,19 +671,25 @@ public class AlgorithmFrame extends JFrame {
         public void actionPerformed(ActionEvent e) {
             try
             {
-
-
                 String index = lei.getText();
                 Integer lei2 = Integer.valueOf(index);
+//                System.out.println("file.abslist.size():"+ file.abslist.size());
                 if (lei2 <= 0 || lei2 > file.abslist.size()) {
                     JOptionPane.showMessageDialog(null, "数据输入有误！", "消息提示", JOptionPane.ERROR_MESSAGE);
                 } else {
+                    if(!pathExist.equals("")) {
+                        File tallAndLength = new File(pathExist+"\\readTallAndReadLength.txt");
+                        BufferedReader read = new BufferedReader(new FileReader(tallAndLength));
+                        String[] tal = read.readLine().split(",");
+                        readtall = Integer.valueOf(tal[0]);
+                        readlength = Integer.valueOf(tal[1]);
+                    }
                     file.kmeanshelp(lei2, readtall, readlength);
-
                 }
             }
             catch(Exception e1)
             {
+                System.out.println(e1.toString());
                 JOptionPane.showMessageDialog(null, "请输入数字！", "消息提示", JOptionPane.ERROR_MESSAGE);
             }
 
@@ -683,22 +719,22 @@ public class AlgorithmFrame extends JFrame {
                 jfjuzheng.setSize(400, 100);
                 jfjuzheng.setLocation(350, 100);
                 jfjuzheng.setVisible(true);
-                Label hanglie = new Label("生成 ");
+                JLabel hanglie = new JLabel("生成 ");
                 row = new TextField();
-                Label hang = new Label("行 ");
+                JLabel hang = new JLabel("行 ");
                 col = new TextField();
-                Label lie = new Label("列矩阵 ");
+                JLabel lie = new JLabel("列矩阵 ");
                 jp.add(hanglie);
                 jp.add(row);
                 jp.add(hang);
                 jp.add(col);
                 jp.add(lie);
-                Label xuhao = new Label("选择每个文件第 ");
+                JLabel xuhao = new JLabel("选择每个文件第 ");
                 jztf = new TextField();
                 jztf.setText("1");
                 jp.add(xuhao);
                 jp.add(jztf);
-                Label allamount = new Label("个数据    共  " + file.wavelist.get(0).length + " 个");
+                JLabel allamount = new JLabel("个数据    共  " + file.wavelist.get(0).length + " 个");
                 jp.add(allamount);
                 JButton bt = new JButton("选择");
                 bt.addActionListener(new jzchooseListener());
@@ -757,18 +793,18 @@ public class AlgorithmFrame extends JFrame {
 
                 //			jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-                Label From = new Label("数据范围 From ");
+                JLabel From = new JLabel("数据范围 From ");
 
                 tf1 = new TextField();
 
                 tf1.setText("1");
 
-                Label To = new Label("To  ");
+                JLabel To = new JLabel("To  ");
                 tf2 = new TextField();
 
                 tf2.setText(file.waveres.length + "");
 
-                Label allamount = new Label("共  " + file.waveres.length + " 个");
+                JLabel allamount = new JLabel("共  " + file.waveres.length + " 个");
 
                 jp.add(From);
                 jp.add(tf1);

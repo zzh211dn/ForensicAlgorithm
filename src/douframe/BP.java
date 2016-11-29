@@ -377,18 +377,18 @@ public class BP {
             do {
                 binary[index--] = (value & 1);
                 System.out.print((value & 1)+" , ");
-                wt.writeToContinueNoNewLine("C:\\Users\\zzh\\Desktop\\test\\tfeature.csv",  (value & 1)+"," );
+                wt.writeToContinueNoNewLine("C:\\Users\\fish123\\Desktop\\test\\tfeature.csv",  (value & 1)+"," );
                 value >>>= 1;
             } while (index != -1);
             System.out.println();
-            wt.writeToContinueNoNewLine("C:\\Users\\zzh\\Desktop\\test\\tfeature.csv", "\r\n" );
+            wt.writeToContinueNoNewLine("C:\\Users\\fish123\\Desktop\\test\\tfeature.csv", "\r\n" );
 
             for(int li = 0;li<4;li++)
             {
                 if( real[li] ==1)
-                    wt.writeToContinueNoNewLine("C:\\Users\\zzh\\Desktop\\test\\tlable.csv", (li+1)+"");
+                    wt.writeToContinueNoNewLine("C:\\Users\\fish123\\Desktop\\test\\tlable.csv", (li+1)+"");
             }
-            wt.writeToContinueNoNewLine("C:\\Users\\zzh\\Desktop\\test\\tlable.csv", "\r\n" );
+            wt.writeToContinueNoNewLine("C:\\Users\\fish123\\Desktop\\test\\tlable.csv", "\r\n" );
 //                        bp.train(binary, real);
 //                    }
 
@@ -440,6 +440,6 @@ public class BP {
 
     public static void main(String[] args) throws Exception {
         bpTestMine();
-
+//        test2();
     }
 }

@@ -7,11 +7,13 @@
       <root url="jar://$PROJECT_DIR$/../drawplot.jar!/" />
       <root url="jar://$PROJECT_DIR$/../javabuilder.jar!/" />
       <root url="jar://$PROJECT_DIR$/../joone-engine.jar!/" />
-      <root url="jar://$PROJECT_DIR$/../kmeanss.jar!/" />
       <root url="jar://$PROJECT_DIR$/../myzoom(1).jar!/" />
       <root url="jar://$PROJECT_DIR$/../myzoom.jar!/" />
-      <root url="jar://$PROJECT_DIR$/../pcaa.jar!/" />
       <root url="jar://$PROJECT_DIR$/../matrixplot.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../kmeanss.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../pcaa.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../commons-math3-3.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../encog-core-3.3.0.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
